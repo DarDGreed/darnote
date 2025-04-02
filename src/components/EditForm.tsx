@@ -1,12 +1,12 @@
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const EditForm = () => {
   const searchParams = useSearchParams();
   const fullParam = searchParams.get("show");
   const id = fullParam?.split("/")[1];
-
+  const router = useRouter();
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
 
@@ -59,6 +59,9 @@ const EditForm = () => {
       className="relative w-full h-[500px] rounded flex flex-col justify-between py-10 bg-green-200 m-4 p-4 z-10 text-2xl"
       onSubmit={handleSubmit}
     >
+      <button onClick={() => router.push("/")} className="absolute top-4 text-xl right-6 z-20 p-2 cursor-pointer bg-green-300 rounded">
+        Close
+      </button>
       <div>
         <div className="w-full flex flex-col">
           <label htmlFor="name" className="text-black">
