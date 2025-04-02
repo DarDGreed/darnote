@@ -1,14 +1,10 @@
 import connectDB from "../db/connectDB";
 import Items from "../models/grocery.items";
 
-interface Params {
-  params: { itemId: string };
-}
-
-export async function GET(_request: Request, { params }: Params) {
+export async function GET(_request: Request, { params }: {params: Promise<{itemId: string}>}) {
   await connectDB();
   try {
-    const { itemId } = params;
+    const { itemId } = await params;
     const getItem = await Items.find({ _id: itemId });
 
     return new Response(JSON.stringify({ getItem }), {
@@ -26,10 +22,10 @@ export async function GET(_request: Request, { params }: Params) {
   }
 }
 
-export async function PATCH(request: Request, { params }: Params) {
+export async function PATCH(request: Request, { params }: {params: Promise<{itemId: string}>}) {
   await connectDB();
   try {
-    const { itemId } = params;
+    const { itemId } = await params;
     const body = await request.json();
 
     const { name, content } = body;
@@ -54,10 +50,10 @@ export async function PATCH(request: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(_request: Request, { params }: Params) {
+export async function DELETE(_request: Request, { params }: {params: Promise<{itemId: string}>}) {
   await connectDB();
   try {
-    const { itemId } = params;
+    const { itemId } = await params;
     const deleteItem = await Items.findByIdAndDelete(itemId);
 
     return new Response(JSON.stringify({ message: "Item deleted", deleteItem }), {
