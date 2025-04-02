@@ -1,93 +1,61 @@
-"use client"
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const EditForm = () => {
-  const { itemId } = useParams(); // Get item ID from URL
-  const [name, setName] = useState("");
-  const [content, setContent] = useState("");
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const fullParam = searchParams.get("show")
+  const id = fullParam?.split("/")[1]
+  const [name, setName] = useState("")
+  const [content, setContent] = useState("")
 
-  // Fetch item details when component loads
+  console.log(id)
+
   useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        const response = await axios.get(`/api/${itemId}`);
-        const item = response.data.getItem[0];
-        setName(item.name);
-        setContent(item.content);
-      } catch (error) {
-        console.error("Error fetching item:", error);
-      }
-    };
+    fetchItem()
+  }, [id])
 
-    if (itemId) {
-      fetchItem();
-    }
-  }, [itemId]);
-
-  // Function to update item
-  const updateItem = async (updatedData: any) => {
-    try {
-      const response = await axios.patch(`/api/${itemId}`, updatedData, {
-        headers: { "Content-Type": "application/json" },
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error updating item:", error);
-    }
-  };
-  const handleDelete = async (e: any) => {
-    e.preventDefault()
-    try {
-      const response = await axios.delete(`/api/${itemId}`)
-      const deleteItem = response
-      if (deleteItem) {
-        alert("Item deleted Successfully")
-        router.push("/")
-      }
-      return Response.json(deleteItem)
-    } catch (error: any) {
-      return Response.json("error deleting item", error.message)
+  const fetchItem = async () => {
+    try{
+      const response = await axios.get(`/api/${id}`)
+      const item = response.data.getItem[0]
+      setName(item.name)
+      setContent(item.content)
+      console.log(item)
+    }catch(error: any){
+      console.error("error fetching items", error.message)
     }
   }
-  // Handle form submission
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const updatedItem = await updateItem({ name, content });
-
-    if (updatedItem) {
-      alert("Item updated successfully!");
+  const updateItem = async (updatedData: any) => {
+    try{
+      const response = await axios.patch(`/api/${id}`,updatedData)
+      return response.data
+    }catch(error: any){
+      console.error("error updating data", error.message)
     }
-  };
-
+  }
+  const handleSubmit = async (e: any) => {
+      const updatedItem = await updateItem({name, content})
+      if(updatedItem){
+        alert("update successful")
+      }
+  }
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="content">Content:</label>
-        <input
-          type="text"
-          name="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Update Item</button>
-      <button onClick={handleDelete}>Delete</button>
-    </form>
-
+    <>
+      <form className="relative w-full h-[500px] rounded flex flex-col justify-between py-10 bg-green-200 m-4 p-4 z-10 text-2xl">
+        <div>
+          <div className="w-full flex flex-col">
+            <label htmlFor="">Name:</label>
+            <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required className="bg-green-300 rounded p-4" />
+          </div>
+          <div className="w-full flex flex-col">
+            <label htmlFor="">Content:</label>
+            <textarea name="content" value={content} onChange={(e) => setContent(e.target.value)} required className="bg-green-300 rounded p-4 h-[200px]" />
+          </div>
+        </div>
+        <button type="submit" className="w-full bg-green-300 p-4 rounded font-semibold cursor-pointer" onClick={handleSubmit}>Update Item</button>
+      </form>
+    </>
   );
 };
 

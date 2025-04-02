@@ -13,7 +13,6 @@ interface Item{
 export default function ItemsList(){
   const [items, setItems] = useState([])
   const router = useRouter();
-
   useEffect(() => {
     fetchItems()
   }, [])
@@ -27,7 +26,6 @@ export default function ItemsList(){
     }
   }
 
-
   const handleDelete = (itemId: any) => {
     console.log(itemId)
     try {
@@ -37,6 +35,12 @@ export default function ItemsList(){
       console.error("error deleting item", error.message)
     }
   }
+  const handleUpdate = (itemId: any) => {
+    console.log(itemId)
+    router.push(`/?show=true/${itemId}`)
+  }
+
+
   return(
     <>
       {items.map((item: Item, index) => (
@@ -50,7 +54,7 @@ export default function ItemsList(){
               <p>{item.content}</p>
             </div>
             <div className="flex gap-4">
-              <button>
+              <button onClick={() => {handleUpdate(item._id)}} className="cursor-pointer">
                 <FilePenLine color="black" />
               </button>
               <button onClick={() => handleDelete(item._id)} className="cursor-pointer">
