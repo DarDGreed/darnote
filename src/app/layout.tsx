@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="max-h-svh h-screen flex justify-center">
+        <div className="h-screen flex">
           <div className="max-w-md w-full bg-green-300 font-mono font-semibold text-green-500 flex flex-col relative">
             <nav className="w-full flex justify-between p-4 text-black">
               <div className="flex gap-1">
@@ -39,7 +39,7 @@ export default function RootLayout({
               {/* <button>show</button> */}
               <div className=""><NavBar /></div>
             </nav>
-            <div className="flex size-full relative items-center justify-center bg-green-200">
+            <div className="flex size-full max-h-[88%] relative items-center justify-center bg-green-200">
               {children}
             </div>
             <footer className="flex items-center justify-center p-4 gap-1 text-black">
