@@ -12,7 +12,7 @@ const HomeComponent = () => {
   const searchParams = useSearchParams();
   const show = searchParams.get("show")
   
-  const handleResponse = (response) => {
+  const handleResponse = (response: boolean) => {
     console.log(response)
     setAddItemOpen(response)
   }
