@@ -30,11 +30,11 @@ const AddForm = () => {
       <form onSubmit={handleSubmit} className="relative w-full h-[500px] rounded flex flex-col justify-between py-10 bg-green-200 m-4 p-4 z-10 text-2xl">
         <div>
           <div className="w-full flex flex-col">
-            <label htmlFor="">Name:</label>
+            <label htmlFor="" className="text-black">Name:</label>
             <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} required className="bg-green-300 rounded p-4" />
           </div>
           <div className="w-full flex flex-col">
-            <label htmlFor="">Content:</label>
+            <label htmlFor="" className="text-black">Content:</label>
             <textarea name="content" value={content} onChange={(e) => setContent(e.target.value)} required className="bg-green-300 rounded p-4 h-[200px]" />
           </div>
         </div>
