@@ -45,8 +45,7 @@ const EditForm = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     if (!id) return;
 
     const updatedItem = await updateItem({ name, content });

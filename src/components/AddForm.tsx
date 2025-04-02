@@ -23,8 +23,7 @@ const AddForm = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevents form from refreshing
+  const handleSubmit = async () => {
     const newItem = await createItem({ name, content });
 
     if (newItem) {

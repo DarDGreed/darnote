@@ -11,7 +11,7 @@ export const connectDB = async () => {
     } else {
       console.log('Unknown error occurred during connection.');
     }
-    process.exit(1);
+    process.exit();
   }
 };
 
