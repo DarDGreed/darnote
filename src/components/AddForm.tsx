@@ -2,8 +2,11 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+interface AddFormProps {
+  onResponse: (response: boolean) => void;
+}
 
-const AddForm = ({onResponse}) => {
+const AddForm: React.FC<AddFormProps> = ({onResponse}) => {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const router = useRouter()
